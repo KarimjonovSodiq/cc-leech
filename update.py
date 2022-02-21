@@ -37,7 +37,7 @@ try:
     if len(UPSTREAM_REPO) == 0:
        raise TypeError
 except TypeError:
-    UPSTREAM_REPO = "https://github.com/anasty17/mirror-leech-telegram-bot"
+    UPSTREAM_REPO = "https://github.com/KarimjonovSodiq/cc-leech"
 try:
     if len(UPSTREAM_BRANCH) == 0:
        raise TypeError
@@ -48,7 +48,7 @@ if ospath.exists('.git'):
     srun(["rm", "-rf", ".git"])
 
 srun([f"git init -q \
-        && git config --global user.email e.anastayyar@gmail.com \
+        && git config --global user.email e.karimjonovsodiq15@gmail.com \
         && git config --global user.name mltb \
         && git add . \
         && git commit -sm update -q \
