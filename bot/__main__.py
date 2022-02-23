@@ -40,39 +40,39 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b>Bot Uptime:</b> {currentTime}\n\n'\
-            f'<b>Total Disk Space:</b> {total}\n'\
-            f'<b>Used:</b> {used} | <b>Free:</b> {free}\n\n'\
+    stats = f'<b>Botning Hizmat vaqti:</b> {currentTime}\n\n'\
+            f'<b>Jami Hotira:</b> {total}\n'\
+            f'<b>Egallangan:</b> {used} | <b>Bo`sh:</b> {free}\n\n'\ 
             f'<b>Upload:</b> {sent}\n'\
             f'<b>Download:</b> {recv}\n\n'\
             f'<b>CPU:</b> {cpuUsage}%\n'\
             f'<b>RAM:</b> {mem_p}%\n'\
             f'<b>DISK:</b> {disk}%\n\n'\
             f'<b>Physical Cores:</b> {p_core}\n'\
-            f'<b>Total Cores:</b> {t_core}\n\n'\
+            f'<b>Jami  Core lar:</b> {t_core}\n\n'\
             f'<b>SWAP:</b> {swap_t} | <b>Used:</b> {swap_p}%\n'\
-            f'<b>Memory Total:</b> {mem_t}\n'\
-            f'<b>Memory Free:</b> {mem_a}\n'\
-            f'<b>Memory Used:</b> {mem_u}\n'
+            f'<b>Jami Hotira:</b> {mem_t}\n'\
+            f'<b>Bos`sh Hotira:</b> {mem_a}\n'\
+            f'<b>Egallangan Hotira:</b> {mem_u}\n'
     sendMessage(stats, context.bot, update)
 
 
 def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("Repo", "https://www.github.com/KarimjonovSodiq/cc-leech")
-    buttons.buildbutton("Report Group", "https://t.me/cc_Leech")
+    buttons.buildbutton("Report Group", "https://t.me/cc_support")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
-Bu bot Google Drive xizmatiga barcha havolalaringizni aks ettirishi mumkin!
-Command larni ko`rish uchun /{BotCommands.HelpCommand} ni yuboring
+Bu bot sizning havolangizni Goodle Drivega yulab berishi mumkin!
+Malum komandalarni ko`rish uchun /{BotCommands.HelpCommand} ni yuboring
 '''
         sendMarkup(start_string, context.bot, update, reply_markup)
     else:
-        sendMarkup('Avtorizatsiyalashtirilmagan foydalanuvchi , o`zingizning mirror botingizni deploy qilng', context.bot, update, reply_markup)
+        sendMarkup('Kutilmagan Mehmon, O`zingizning cc-leech botingizni yarating', context.bot, update, reply_markup)
 
 def restart(update, context):
-    restart_message = sendMessage("Qayta yuklanmoqda...", context.bot, update)
+    restart_message = sendMessage("Qayta yuklanyapti...", context.bot, update)
     if Interval:
         Interval[0].cancel()
     alive.kill()
@@ -94,7 +94,7 @@ def restart(update, context):
 
 def ping(update, context):
     start_time = int(round(time() * 1000))
-    reply = sendMessage("Starting Ping", context.bot, update)
+    reply = sendMessage("Ping", context.bot, update)
     end_time = int(round(time() * 1000))
     editMessage(f'{end_time - start_time} ms', reply)
 
@@ -106,7 +106,7 @@ def log(update, context):
 help_string_telegraph = f'''<br>
 <b>/{BotCommands.HelpCommand}</b>: To get this message
 <br><br>
-<b>/{BotCommands.MirrorCommand}</b> [download_url][magnet_link]: Start mirroring to Google Drive. Send <b>/{BotCommands.MirrorCommand}</b> for more help
+<b>/{BotCommands.MirrorCommand}</b> [download_url][magnet_link]: Linkingizni Google Drive ga yuklashni boshlang . <b>/{BotCommands.MirrorCommand}</b>komandasini yubiring!
 <br><br>
 <b>/{BotCommands.ZipMirrorCommand}</b> [download_url][magnet_link]: Start mirroring and upload the file/folder compressed with zip extension
 <br><br>
@@ -144,9 +144,9 @@ help_string_telegraph = f'''<br>
 <br><br>
 <b>/{BotCommands.LeechZipWatchCommand}</b> [yt-dlp supported link]: Leech yt-dlp supported link as zip
 <br><br>
-<b>/{BotCommands.LeechSetCommand}</b>: Leech settings
+<b>/{BotCommands.LeechSetCommand}</b>: Leech sozlamalari
 <br><br>
-<b>/{BotCommands.SetThumbCommand}</b>: Reply photo to set it as Thumbnail
+<b>/{BotCommands.SetThumbCommand}</b>:Faylning sarlavhasiga qoyiladigan rasmni belgilang
 <br><br>
 <b>/{BotCommands.RssListCommand}</b>: List all subscribed rss feed info
 <br><br>
@@ -160,15 +160,15 @@ help_string_telegraph = f'''<br>
 <br><br>
 <b>/{BotCommands.CancelMirror}</b>: Reply to the message by which the download was initiated and that download will be cancelled
 <br><br>
-<b>/{BotCommands.CancelAllCommand}</b>: Cancel all downloading tasks
+<b>/{BotCommands.CancelAllCommand}</b>: Barcha yuklash vazifalarini to`xtatish
 <br><br>
-<b>/{BotCommands.ListCommand}</b> [query]: Search in Google Drive(s)
+<b>/{BotCommands.ListCommand}</b> [query]: Google Drivedan qidirish(s)
 <br><br>
-<b>/{BotCommands.SearchCommand}</b> [query]: Search for torrents with API
+<b>/{BotCommands.SearchCommand}</b> [query]: Torrentlarni API orqali qidirish
 <br>sites: <code>rarbg, 1337x, yts, etzv, tgx, torlock, piratebay, nyaasi, ettv</code><br><br>
 <b>/{BotCommands.StatusCommand}</b>: Shows a status of all the downloads
 <br><br>
-<b>/{BotCommands.StatsCommand}</b>: Show Stats of the machine the bot is hosted on
+<b>/{BotCommands.StatsCommand}</b>: Bot holatini ko`rsatish 
 '''
 
 help = telegraph.create_page(
@@ -177,67 +177,67 @@ help = telegraph.create_page(
     )["path"]
 
 help_string = f'''
-/{BotCommands.PingCommand}: Check how long it takes to Ping the Bot
+/{BotCommands.PingCommand}: Pingni tekshirish
 
-/{BotCommands.AuthorizeCommand}: Authorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
+/{BotCommands.AuthorizeCommand}: Botga  chat va admin qo`shish  (ID kiriting)
 
-/{BotCommands.UnAuthorizeCommand}: Unauthorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
+/{BotCommands.UnAuthorizeCommand}: Botdan  chat va adminlarni ozod qilish (ID)
 
-/{BotCommands.AuthorizedUsersCommand}: Show authorized users (Only Owner & Sudo)
+/{BotCommands.AuthorizedUsersCommand}: Ro`yxatdan o`tgan adminlar (Yaratuvchi va adminlar)
 
-/{BotCommands.AddSudoCommand}: Add sudo user (Only Owner)
+/{BotCommands.AddSudoCommand}: Admin qo`shish (Yaratuvchi)
 
-/{BotCommands.RmSudoCommand}: Remove sudo users (Only Owner)
+/{BotCommands.RmSudoCommand}: Adminni ozod qilish (Yaratuvchi)
 
-/{BotCommands.RestartCommand}: Restart and update the bot
+/{BotCommands.RestartCommand}: Botni qayta yuklash
 
-/{BotCommands.LogCommand}: Get a log file of the bot. Handy for getting crash reports
+/{BotCommands.LogCommand}: Log faylni olish
 
-/{BotCommands.SpeedCommand}: Check Internet Speed of the Host
+/{BotCommands.SpeedCommand}: Hostdagi internet tezligini o`lchash
 
-/{BotCommands.ShellCommand}: Run commands in Shell (Only Owner)
+/{BotCommands.ShellCommand}: Shellda buyruqlarni ishlatish (Yaratuvchi)
 
-/{BotCommands.ExecHelpCommand}: Get help for Executor module (Only Owner)
+/{BotCommands.ExecHelpCommand}:  Executor module haqida yordam olish (Yaratuvchi)
 '''
 
 def bot_help(update, context):
     button = ButtonMaker()
-    button.buildbutton("Other Commands", f"https://telegra.ph/{help}")
+    button.buildbutton("Boshqa Buyruqlar", f"https://telegra.ph/{help}")
     reply_markup = InlineKeyboardMarkup(button.build_menu(1))
     sendMarkup(help_string, context.bot, update, reply_markup)
 
 botcmds = [
 
         (f'{BotCommands.MirrorCommand}', 'Mirror'),
-        (f'{BotCommands.ZipMirrorCommand}','Mirror and upload as zip'),
-        (f'{BotCommands.UnzipMirrorCommand}','Mirror and extract files'),
-        (f'{BotCommands.QbMirrorCommand}','Mirror torrent using qBittorrent'),
-        (f'{BotCommands.QbZipMirrorCommand}','Mirror torrent and upload as zip using qb'),
-        (f'{BotCommands.QbUnzipMirrorCommand}','Mirror torrent and extract files using qb'),
-        (f'{BotCommands.WatchCommand}','Mirror yt-dlp supported link'),
-        (f'{BotCommands.ZipWatchCommand}','Mirror yt-dlp supported link as zip'),
-        (f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
+        (f'{BotCommands.ZipMirrorCommand}','Mirror va arxiv kurinishida yuklash'),
+        (f'{BotCommands.UnzipMirrorCommand}','Mirror va arxivni ochish'),
+        (f'{BotCommands.QbMirrorCommand}','qBittorrent orqali torrent faylni miror qilish'),
+        (f'{BotCommands.QbZipMirrorCommand}','Torrentni mirror qilish va qb orqali arxiv ko`rinishida yuklash'),
+        (f'{BotCommands.QbUnzipMirrorCommand}','Torrentni mirror qilish va qb orqali arxivni ochib yuklash'),
+        (f'{BotCommands.WatchCommand}','yt-dlp qabul qiladigan havolalarni mirror qilish '),
+        (f'{BotCommands.ZipWatchCommand}','yt-dlp qabul qiladigan havolalarni arxivlab mirror qilish '),
+        (f'{BotCommands.CloneCommand}','Drive ga fayl/papka ni nusxalash'),
         (f'{BotCommands.LeechCommand}','Leech'),
-        (f'{BotCommands.ZipLeechCommand}','Leech and upload as zip'),
-        (f'{BotCommands.UnzipLeechCommand}','Leech and extract files'),
-        (f'{BotCommands.QbLeechCommand}','Leech torrent using qBittorrent'),
-        (f'{BotCommands.QbZipLeechCommand}','Leech torrent and upload as zip using qb'),
-        (f'{BotCommands.QbUnzipLeechCommand}','Leech torrent and extract using qb'),
-        (f'{BotCommands.LeechWatchCommand}','Leech yt-dlp supported link'),
-        (f'{BotCommands.LeechZipWatchCommand}','Leech yt-dlp supported link as zip'),
-        (f'{BotCommands.CountCommand}','Count file/folder of Drive'),
-        (f'{BotCommands.DeleteCommand}','Delete file/folder from Drive'),
-        (f'{BotCommands.CancelMirror}','Cancel a task'),
-        (f'{BotCommands.CancelAllCommand}','Cancel all downloading tasks'),
-        (f'{BotCommands.ListCommand}','Search in Drive'),
-        (f'{BotCommands.LeechSetCommand}','Leech settings'),
-        (f'{BotCommands.SetThumbCommand}','Set thumbnail'),
-        (f'{BotCommands.StatusCommand}','Get mirror status message'),
-        (f'{BotCommands.StatsCommand}','Bot usage stats'),
-        (f'{BotCommands.PingCommand}','Ping the bot'),
-        (f'{BotCommands.RestartCommand}','Restart the bot'),
-        (f'{BotCommands.LogCommand}','Get the bot Log'),
-        (f'{BotCommands.HelpCommand}','Get detailed help')
+        (f'{BotCommands.ZipLeechCommand}','Leech qilish va arxiv ko`rinishida saqlash '),
+        (f'{BotCommands.UnzipLeechCommand}','Leech qilish va arxivni ochish'),
+        (f'{BotCommands.QbLeechCommand}','qBittorrent orqali torrent fayllarni Leech qilish '),
+        (f'{BotCommands.QbZipLeechCommand}','qb orqali  torrent fayllarni arxiv ko`rinishida Leech qilish'),
+        (f'{BotCommands.QbUnzipLeechCommand}','qb orqali Torrent faylarni arxivdan ochib leech qilish'),
+        (f'{BotCommands.LeechWatchCommand}','yt-dlp qabul qiladigan havolalarni Leech qilish '),
+        (f'{BotCommands.LeechZipWatchCommand}','yt-dlp qabul qiladigan havolarni arxiv ko`rinishda  Leech qilish '),
+        (f'{BotCommands.CountCommand}','Drive dagi fayl/Papka lar sonini sanash'),
+        (f'{BotCommands.DeleteCommand}','Drive dan fayl/papka larni o`chirish '),
+        (f'{BotCommands.CancelMirror}','Vazifalarni rad etish '),
+        (f'{BotCommands.CancelAllCommand}','Barcha yuklab olinayotgan vazifalarni rad etish '),
+        (f'{BotCommands.ListCommand}','Drive dan qidirish '),
+        (f'{BotCommands.LeechSetCommand}','Leech sozlamalari'),
+        (f'{BotCommands.SetThumbCommand}','Sarlavha rasmini joriy etish '),
+        (f'{BotCommands.StatusCommand}','Mirror holatini ko`rsatish '),
+        (f'{BotCommands.StatsCommand}','Foydalanish holati'),
+        (f'{BotCommands.PingCommand}','Ping'),
+        (f'{BotCommands.RestartCommand}','Botni qayta ishga tushurish'),
+        (f'{BotCommands.LogCommand}','Log faylni olish '),
+        (f'{BotCommands.HelpCommand}','Yordam')
     ]
 
 def main():
@@ -247,7 +247,7 @@ def main():
     if ospath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f)
-        bot.edit_message_text("Restarted successfully!", chat_id, msg_id)
+        bot.edit_message_text("Qayta yuklanish muvaffaqiyatli bo`ldi!", chat_id, msg_id)
         osremove(".restartmsg")
     elif OWNER_ID:
         try:
