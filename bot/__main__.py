@@ -42,7 +42,8 @@ def stats(update, context):
     mem_u = get_readable_file_size(memory.used)
     stats = f'<b>Botning Hizmat vaqti:</b> {currentTime}\n\n'\
             f'<b>Jami Hotira:</b> {total}\n'\
-            f'<b>Egallangan:</b> {used} | <b>Bo`sh:</b> {free}\n\n'\ 
+            f'<b>Egallangan:</b> {used} \n'\
+            f'<b>Bo`sh:</b> {free}\n'\ 
             f'<b>Upload:</b> {sent}\n'\
             f'<b>Download:</b> {recv}\n\n'\
             f'<b>CPU:</b> {cpuUsage}%\n'\
