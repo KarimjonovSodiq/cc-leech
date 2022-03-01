@@ -62,15 +62,15 @@ def _watch(bot, update, isZip=False, isLeech=False):
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
 
     if not is_url(link):
-        help_msg = "<b>Send link along with command line:</b>"
+        help_msg = "<b>Buyruqlar qatori bilan havolani yuboring:</b>"
         help_msg += "\n<code>/command</code> {link} |newname pswd: mypassword [𝚣𝚒𝚙] args: x:y|x1:y1"
-        help_msg += "\n\n<b>By replying to link:</b>"
+        help_msg += "\n\n<b>Havolaga javob berish orqali:</b>"
         help_msg += "\n<code>/command</code> |newname pswd: mypassword [𝚣𝚒𝚙] args: x:y|x1:y1"
-        help_msg += "\n\n<b>Args Example:</b> args: playliststart:^10|match_filter:season_number=18|matchtitle:S1"
-        help_msg += "\n\n<b>NOTE:</b> Add `^` before integer, some values must be integer and some string."
-        help_msg += " Like playlist_items:10 works with string so no need to add `^` before the number"
-        help_msg += " but playlistend works only with integer so you must add `^` before the number like example above."
-        help_msg += "\n\nCheck all arguments from this <a href='https://github.com/yt-dlp/yt-dlp/blob/a3125791c7a5cdf2c8c025b99788bf686edd1a8a/yt_dlp/YoutubeDL.py#L194'>FILE</a>."
+        help_msg += "\n\n<b>Args misoli:</b> args: playliststart:^10|match_filter:season_number=18|matchtitle:S1"
+        help_msg += "\n\n<b>ESLATMA:</b> Butun sondan oldin `^` qo'shing, ba'zi qiymatlar butun va bir qator bo'lishi kerak."
+        help_msg += " Like playlist_items:10 string bilan ishlaydi, shuning uchun raqamdan oldin `^` qo'shish shart emas"
+        help_msg += " lekin playlistend faqat butun son bilan ishlaydi, shuning uchun yuqoridagi misol kabi raqam oldiga `^` qo'shishingiz kerak."
+        help_msg += "\n\nBundan barcha argumentlarni tekshiring <a href='https://github.com/yt-dlp/yt-dlp/blob/a3125791c7a5cdf2c8c025b99788bf686edd1a8a/yt_dlp/YoutubeDL.py#L194'>FILE</a>."
         return sendMessage(help_msg, bot, update)
 
     listener = MirrorListener(bot, update, isZip, isLeech=isLeech, pswd=pswd, tag=tag)
@@ -90,9 +90,9 @@ def _watch(bot, update, isZip=False, isLeech=False):
             video_format = f"bv*[height<={i}][ext=webm]"
             buttons.sbutton(f"{i}-webm", f"qu {msg_id} {video_format} t")
         buttons.sbutton("Audios", f"qu {msg_id} audio t")
-        buttons.sbutton("Best Videos", f"qu {msg_id} {best_video} t")
-        buttons.sbutton("Best Audios", f"qu {msg_id} {best_audio} t")
-        buttons.sbutton("Cancel", f"qu {msg_id} cancel")
+        buttons.sbutton("Eng yaxshi videolar", f"qu {msg_id} {best_video} t")
+        buttons.sbutton("Eng yaxshi audio", f"qu {msg_id} {best_audio} t")
+        buttons.sbutton("Bekor qilish", f"qu {msg_id} cancel")
         YTBUTTONS = InlineKeyboardMarkup(buttons.build_menu(3))
         listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args]
         bmsg = sendMarkup('Choose Playlist Videos Quality:', bot, update, YTBUTTONS)
@@ -144,7 +144,7 @@ def _watch(bot, update, isZip=False, isLeech=False):
         buttons.sbutton("Cancel", f"qu {msg_id} cancel")
         YTBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
         listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args, formats_dict]
-        bmsg = sendMarkup('Choose Video Quality:', bot, update, YTBUTTONS)
+        bmsg = sendMarkup('Video sifatini tanlang:', bot, update, YTBUTTONS)
 
     Thread(target=_auto_cancel, args=(bmsg, msg_id)).start()
 
@@ -173,8 +173,8 @@ def _qual_subbuttons(task_id, qual, msg):
         size = formats_dict[qual][br]
         buttonName = f"{br}K ({get_readable_file_size(size)})"
         buttons.sbutton(str(buttonName), f"qu {task_id} {video_format}")
-    buttons.sbutton("Back", f"qu {task_id} back")
-    buttons.sbutton("Cancel", f"qu {task_id} cancel")
+    buttons.sbutton("Orqaga", f"qu {task_id} back")
+    buttons.sbutton("Bekor qilish", f"qu {task_id} cancel")
     SUBBUTTONS = InlineKeyboardMarkup(buttons.build_menu(2))
     editMessage(f"Choose Video Bitrate for <b>{qual}</b>:", msg, SUBBUTTONS)
 
