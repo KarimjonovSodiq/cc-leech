@@ -16,7 +16,7 @@ def cancel_mirror(update, context):
         gid = args[1]
         dl = getDownloadByGid(gid)
         if not dl:
-            sendMessage(f"GID: <code>{gid}</code> Not Found.", context.bot, update)
+            sendMessage(f"GID: <code>{gid}</code> Topilmadi.", context.bot, update)
             return
         mirror_message = dl.message
     elif update.message.reply_to_message:
@@ -30,15 +30,15 @@ def cancel_mirror(update, context):
     if len(args) == 1 and (
         not mirror_message or mirror_message.message_id not in keys
     ):
-        msg = f"Reply to active <code>/{BotCommands.MirrorCommand}</code> message which was used to start the download or send <code>/{BotCommands.CancelMirror} GID</code> to cancel it!"
+        msg = f"Faol bolgan<code>/{BotCommands.MirrorCommand}</code> buyruqqa  jarayonni to`xtatish uchun <code>/{BotCommands.CancelMirror} buyru`gini belgilab yuboring. GID</code> ni to`xtatish uchun!"
         sendMessage(msg, context.bot, update)
         return
     if dl.status() == MirrorStatus.STATUS_ARCHIVING:
-        sendMessage("Archival in Progress, You Can't Cancel It.", context.bot, update)
+        sendMessage("Arxivlash jarayonda. Siz uni to`xtatishingiz mumkin.", context.bot, update)
     elif dl.status() == MirrorStatus.STATUS_EXTRACTING:
-        sendMessage("Extract in Progress, You Can't Cancel It.", context.bot, update)
+        sendMessage("Arxivdan chiqarish jarayonda, Siz uni to`xtatishingiz mumkin.", context.bot, update)
     elif dl.status() == MirrorStatus.STATUS_SPLITTING:
-        sendMessage("Split in Progress, You Can't Cancel It.", context.bot, update)
+        sendMessage("Split jarayonda, Siz uni to`xtatishingiz mumkin .", context.bot, update)
     else:
         dl.download().cancel_download()
 
@@ -55,7 +55,7 @@ def cancel_all(update, context):
                 sleep(0.3)
         else:
             break
-    sendMessage(f'{count} Download(s) has been Cancelled!', context.bot, update)
+    sendMessage(f'{count} Yulanish(lar) bekor qilindi!', context.bot, update)
 
 
 
