@@ -14,7 +14,7 @@ def authorize(update, context):
     if len(message_) == 2:
         user_id = int(message_[1])
         if user_id in AUTHORIZED_CHATS:
-            msg = 'User Already Authorized!'
+            msg = 'Foydalanuvchi allaqachon qabul qilingan!'
         elif DB_URI is not None:
             msg = DbManger().user_auth(user_id)
             AUTHORIZED_CHATS.add(user_id)
@@ -22,12 +22,12 @@ def authorize(update, context):
             AUTHORIZED_CHATS.add(user_id)
             with open('authorized_chats.txt', 'a') as file:
                 file.write(f'{user_id}\n')
-                msg = 'User Authorized'
+                msg = 'Foydalanuvchi qabu qilindi'
     elif reply_message is None:
         # Trying to authorize a chat
         chat_id = update.effective_chat.id
         if chat_id in AUTHORIZED_CHATS:
-            msg = 'Chat Already Authorized!'
+            msg = 'Chat allaqachon qabul qilingan!'
         elif DB_URI is not None:
             msg = DbManger().user_auth(chat_id)
             AUTHORIZED_CHATS.add(chat_id)
@@ -35,12 +35,12 @@ def authorize(update, context):
             AUTHORIZED_CHATS.add(chat_id)
             with open('authorized_chats.txt', 'a') as file:
                 file.write(f'{chat_id}\n')
-                msg = 'Chat Authorized'
+                msg = 'Chat qabul qilindi'
     else:
         # Trying to authorize someone by replying
         user_id = reply_message.from_user.id
         if user_id in AUTHORIZED_CHATS:
-            msg = 'User Already Authorized!'
+            msg = 'Foydalanuvchi allaqachon qabul qilingan!'
         elif DB_URI is not None:
             msg = DbManger().user_auth(user_id)
             AUTHORIZED_CHATS.add(user_id)
@@ -48,7 +48,7 @@ def authorize(update, context):
             AUTHORIZED_CHATS.add(user_id)
             with open('authorized_chats.txt', 'a') as file:
                 file.write(f'{user_id}\n')
-                msg = 'User Authorized'
+                msg = 'Foydalanuchi qabul qilindi'
     sendMessage(msg, context.bot, update)
 
 def unauthorize(update, context):
@@ -62,10 +62,10 @@ def unauthorize(update, context):
             if DB_URI is not None:
                 msg = DbManger().user_unauth(user_id)
             else:
-                msg = 'User Unauthorized'
+                msg = 'Foydalanuvchi rad etildi'
             AUTHORIZED_CHATS.remove(user_id)
         else:
-            msg = 'User Already Unauthorized!'
+            msg = 'Foydalanuvchi allaqachon rad etilgan!'
     elif reply_message is None:
         # Trying to unauthorize a chat
         chat_id = update.effective_chat.id
@@ -73,10 +73,10 @@ def unauthorize(update, context):
             if DB_URI is not None:
                 msg = DbManger().user_unauth(chat_id)
             else:
-                msg = 'Chat Unauthorized'
+                msg = 'Chat rad etildi'
             AUTHORIZED_CHATS.remove(chat_id)
         else:
-            msg = 'Chat Already Unauthorized!'
+            msg = 'Chat allaqachon rad etilgan!'
     else:
         # Trying to authorize someone by replying
         user_id = reply_message.from_user.id
@@ -84,10 +84,10 @@ def unauthorize(update, context):
             if DB_URI is not None:
                 msg = DbManger().user_unauth(user_id)
             else:
-                msg = 'User Unauthorized'
+                msg = 'Foydalanuchi rad etildi'
             AUTHORIZED_CHATS.remove(user_id)
         else:
-            msg = 'User Already Unauthorized!'
+            msg = 'Foydalanuvchi allaqachon rad etilgan!'
     if DB_URI is None:
         with open('authorized_chats.txt', 'a') as file:
             file.truncate(0)
@@ -103,7 +103,7 @@ def addSudo(update, context):
     if len(message_) == 2:
         user_id = int(message_[1])
         if user_id in SUDO_USERS:
-            msg = 'Already Sudo!'
+            msg = 'Allaqachon admin'
         elif DB_URI is not None:
             msg = DbManger().user_addsudo(user_id)
             SUDO_USERS.add(user_id)
@@ -111,14 +111,14 @@ def addSudo(update, context):
             SUDO_USERS.add(user_id)
             with open('sudo_users.txt', 'a') as file:
                 file.write(f'{user_id}\n')
-                msg = 'Promoted as Sudo'
+                msg = 'Admin sifatida tayinlash'
     elif reply_message is None:
-        msg = "Give ID or Reply To message of whom you want to Promote."
+        msg = "Tayinlamoqchi bo`lganingizni ID si yoki Yuborilgan habarini yuboring."
     else:
         # Trying to authorize someone by replying
         user_id = reply_message.from_user.id
         if user_id in SUDO_USERS:
-            msg = 'Already Sudo!'
+            msg = 'Allaqachon admin!'
         elif DB_URI is not None:
             msg = DbManger().user_addsudo(user_id)
             SUDO_USERS.add(user_id)
@@ -126,7 +126,7 @@ def addSudo(update, context):
             SUDO_USERS.add(user_id)
             with open('sudo_users.txt', 'a') as file:
                 file.write(f'{user_id}\n')
-                msg = 'Promoted as Sudo'
+                msg = 'Admin qilib tayinlash'
     sendMessage(msg, context.bot, update)
 
 def removeSudo(update, context):
@@ -140,19 +140,19 @@ def removeSudo(update, context):
             if DB_URI is not None:
                 msg = DbManger().user_rmsudo(user_id)
             else:
-                msg = 'Demoted'
+                msg = 'Ozod qilindi'
             SUDO_USERS.remove(user_id)
         else:
-            msg = 'Not sudo user to demote!'
+            msg = 'Ozod qilishga adminlar yo`q!'
     elif reply_message is None:
-        msg = "Give ID or Reply To message of whom you want to remove from Sudo"
+        msg = "O`chirmoqchi bo`lgan Admingizni idsini bering"
     else:
         user_id = reply_message.from_user.id
         if user_id in SUDO_USERS:
             if DB_URI is not None:
                 msg = DbManger().user_rmsudo(user_id)
             else:
-                msg = 'Demoted'
+                msg = 'Ozod qilingan'
             SUDO_USERS.remove(user_id)
         else:
             msg = 'Not sudo user to demote!'
