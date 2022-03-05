@@ -59,7 +59,7 @@ def stats(update, context):
 
 def start(update, context):
     buttons = ButtonMaker()
-    buttons.buildbutton("CC-Drive guruhi", "https://t.me/CC-Leech")
+    buttons.buildbutton("CC-Drive guruhi", "https://t.me/+84ICMFnj6vM3MTdi")
     buttons.buildbutton("Yaratuvchi", "https://t.me/Close_Coder")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
@@ -69,7 +69,7 @@ Malum komandalarni ko`rish uchun /{BotCommands.HelpCommand} ni yuboring😁
 '''
         sendMarkup(start_string, context.bot, update, reply_markup)
     else:
-        sendMarkup('''Kutilmagan Mehmon🥸, O`zingizning cc-leech botingizni yarating🛠 
+        sendMarkup('''Kutilmagan Mehmon🥸, 
                    Ps:Yaratish bo`yicha Yaratuvchiga murojaat qiling''', context.bot, update, reply_markup)
 
 def restart(update, context):
