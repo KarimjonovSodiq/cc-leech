@@ -13,7 +13,7 @@ from telegram.ext import CommandHandler
 from telegram import InlineKeyboardMarkup
 
 from bot import Interval, INDEX_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, \
-                BUTTON_SIX_NAME, BUTTON_SIX_URL, BLOCK_MEGA_FOLDER, BLOCK_MEGA_LINKS, VIEW_LINK, aria2, QB_SEED, \
+                BUTTON_SIX_NAME, BUTTON_SIX_URL, MEGA_FOLDER, MEGA_LINKS, VIEW_LINK, aria2, QB_SEED, \
                 dispatcher, DOWNLOAD_DIR, download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER
 from bot.helper.ext_utils.bot_utils import is_url, is_magnet, is_gdtot_link, is_mega_link, is_gdrive_link, get_content_type, get_mega_link_type
 from bot.helper.ext_utils.fs_utils import get_base_name, get_path_size, split as fssplit, clean_download
@@ -62,7 +62,7 @@ class MirrorListener:
 
     def onDownloadComplete(self):
         with download_dict_lock:
-            LOGGER.info(f"Download completed: {download_dict[self.uid].name()}")
+            LOGGER.info(f"Yuklab olish yakunlandi: {download_dict[self.uid].name()}")
             download = download_dict[self.uid]
             name = str(download.name()).replace('/', '')
             gid = download.gid()
@@ -195,14 +195,14 @@ class MirrorListener:
             update_all_messages()
 
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
-        msg = f'<b>Name: </b><code>{escape(name)}</code>\n\n<b>Size: </b>{size}'
+        msg = f'<b>Nomi: </b><code>{escape(name)}</code>\n\n<b>Hajmi: </b>{size}'
         if self.isLeech:
             count = len(files)
-            msg += f'\n<b>Total Files: </b>{count}'
+            msg += f'\n<b>JAmi fayllar: </b>{count}'
             if typ != 0:
                 msg += f'\n<b>Corrupted Files: </b>{typ}'
             msg += f'\n<b>cc: </b>{self.tag}\n\n'
-            if self.message.chat.type == 'private':
+            if self.message.chat.type == 'mahfiy':
                 sendMessage(msg, self.bot, self.update)
             else:
                 chat_id = str(self.message.chat.id)[4:]
@@ -231,27 +231,27 @@ class MirrorListener:
         else:
             msg += f'\n\n<b>Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>SubFolders: </b>{folders}'
-                msg += f'\n<b>Files: </b>{files}'
+                msg += f'\n<b>SubPapkalar: </b>{folders}'
+                msg += f'\n<b>Fayllar: </b>{files}'
             msg += f'\n\n<b>cc: </b>{self.tag}'
             buttons = ButtonMaker()
             link = short_url(link)
-            buttons.buildbutton("☁️ Drive Link", link)
-            LOGGER.info(f'Done Uploading {name}')
+            buttons.buildbutton("☁️ Drive Havolasi", link)
+            LOGGER.info(f'Yuklash muvaffaqiyatli {name}')
             if INDEX_URL is not None:
                 url_path = requests.utils.quote(f'{name}')
                 share_url = f'{INDEX_URL}/{url_path}'
                 if ospath.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{name}'):
                     share_url += '/'
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("⚡ Index havolasi", share_url)
                 else:
                     share_url = short_url(share_url)
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("⚡ Index havolasi", share_url)
                     if VIEW_LINK:
-                        share_urls = f'{INDEX_URL}/{url_path}?a=view'
+                        share_urls = f'{https://Closecoder.cf}'
                         share_urls = short_url(share_urls)
-                        buttons.buildbutton("🌐 View Link", share_urls)
+                        buttons.buildbutton("🌐 CloseCoder.cf ", share_urls)
             if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
@@ -393,7 +393,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
             try:
                 is_gdtot = is_gdtot_link(link)
                 link = direct_link_generator(link)
-                LOGGER.info(f"Generated link: {link}")
+                LOGGER.info(f"Generatsiya qilingan link: {link}")
             except DirectDownloadLinkException as e:
                 LOGGER.info(str(e))
                 if str(e).startswith('ERROR:'):
@@ -412,34 +412,34 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                         t.write(resp.content)
                     link = str(file_name)
                 else:
-                    return sendMessage(f"ERROR: link got HTTP response: {resp.status_code}", bot, update)
+                    return sendMessage(f"ERROR: havola HTTP murojatiga ega: {resp.status_code}", bot, update)
             except Exception as e:
                 error = str(e).replace('<', ' ').replace('>', ' ')
-                if error.startswith('No connection adapters were found for'):
+                if error.startswith('Ulangan qurilmalar topilmadi'):
                     link = error.split("'")[1]
                 else:
                     LOGGER.error(str(e))
                     return sendMessage(tag + " " + error, bot, update)
         else:
-            msg = "Qb commands for torrents only. if you are trying to dowload torrent then report."
+            msg = "Qb buyurgi` faqat torrent fayllar uchun"
             return sendMessage(msg, bot, update)
 
     listener = MirrorListener(bot, update, isZip, extract, isQbit, isLeech, pswd, tag)
 
     if is_gdrive_link(link):
         if not isZip and not extract and not isLeech:
-            gmsg = f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\n\n"
-            gmsg += f"Use /{BotCommands.ZipMirrorCommand} to make zip of Google Drive folder\n\n"
-            gmsg += f"Use /{BotCommands.UnzipMirrorCommand} to extracts Google Drive archive file"
+            gmsg = f" Fayl/Papka ni Google Drive ga Clone qilish uchun /{BotCommands.CloneCommand} buyrug`ini yuboring\n\n"
+            gmsg += f"Fayl/Papka ni Google Drive da zip qilmoqchi bo`lsangiz /{BotCommands.ZipMirrorCommand} buyrug`idan foydalaning\n\n"
+            gmsg += f"Arxivlangan Fayl/Papka ni Google driveda arxivdan chiqarmoqchi bulsangiz  /{BotCommands.UnzipMirrorCommand} Buyrug`idan foydalaning"
             return sendMessage(gmsg, bot, update)
         Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
 
     elif is_mega_link(link):
-        if BLOCK_MEGA_LINKS:
+        if MEGA_LINKS:
             sendMessage("Mega links are blocked!", bot, update)
             return
         link_type = get_mega_link_type(link)
-        if link_type == "folder" and BLOCK_MEGA_FOLDER:
+        if link_type == "folder" and MEGA_FOLDER:
             sendMessage("Mega folder are blocked!", bot, update)
         else:
             Thread(target=add_mega_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener)).start()
