@@ -250,7 +250,7 @@ class MirrorListener:
                     share_url = short_url(share_url)
                     buttons.buildbutton("⚡ Index havolasi", share_url)
                     if VIEW_LINK:
-                        share_urls = f'{https://Closecoder.cf}'
+                        share_urls = f'https://closecoder.cf'
                         share_urls = short_url(share_urls)
                         buttons.buildbutton("🌐 CloseCoder.cf ", share_urls)
             if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
