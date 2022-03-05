@@ -244,6 +244,7 @@ class MirrorListener:
                 if ospath.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{name}'):
                     share_url += '/'
                     share_url = short_url(share_url)
+                    share_url = short_url(share_url)
                     buttons.buildbutton("⚡ Index havolasi", share_url)
                 else:
                     share_url = short_url(share_url)
