@@ -31,7 +31,7 @@ def short_url(longurl):
             f"https://direct-link.net/{SHORTENER_API}/{random() * 1000}/dynamic?r={url}",
             f"https://file-link.net/{SHORTENER_API}/{random() * 1000}/dynamic?r={url}"]
         link = choice(linkvertise)
-    elif "bitly.com" in SHORTENER
+    elif "bitly.com" in SHORTENER:
         shorten_url = "https://api-ssl.bit.ly/v4/shorten"
         headers = {"Authorization": f"Bearer {SHORTENER_API}"
         response = create_scraper().post(shorten_url, json={"long_url": longurl}, headers=headers).json()
